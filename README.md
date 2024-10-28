@@ -90,7 +90,7 @@ Note: Doesn't work with firmware v6.6.x see issue https://github.com/jagheterfre
 3. `ssh` to your Wallbox and run
 
 ```sh
-curl -sSfL https://github.com/jagheterfredrik/wallbox-mqtt-bridge/releases/download/bridge/install.sh > install.sh && bash install.sh
+curl -sSfL https://github.com/sweber/wallbox-mqtt-bridge/releases/tag/v20241028_1/install.sh > install.sh && bash install.sh
 ```
 
 Note: To upgrade to new version, simply run the command from step 3 again.
