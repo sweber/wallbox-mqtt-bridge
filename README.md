@@ -53,9 +53,6 @@ loadpoints:
   charger: wallboxpulsarcharger
   meter: wallboxpulsarmeter
   mode: pv
-  phases: 3
-  mincurrent: 6
-  maxcurrent: 16
 ```
 
 
