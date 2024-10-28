@@ -1,3 +1,67 @@
+# MQTT Bridge for Wallbox (Enhanced for EVCC)
+This is a modified version of Fredrik Gustafssons **awesome** Wallbox Pulsar Plus mqtt bridge (https://github.com/jagheterfredrik/).
+
+The changes here where made to use the mqtt bridge in conjunction with evcc (https://evcc.io).
+
+To setup the Pulsar Plus with evcc follow the steps below:
+1. Root your Wallbox and setup the bridge (see below)
+2. Setup mqtt in evcc (https://docs.evcc.io/docs/reference/configuration/mqtt)
+3. Extend the evcc configuration with following meter/charger/loadpoint (don't forget to replace the wallbox id placeholder)
+```yaml
+meters:
+- name: wallboxpulsarmeter
+  type: custom
+  power:
+    source: mqtt
+    topic: wallbox_<your_wallbox_id>/charging_power/state
+    timeout: 180s
+  currents:
+    - source: mqtt
+      topic: wallbox_<your_wallbox_id>/charging_current_l1/state
+    - source: mqtt
+      topic: wallbox_<your_wallbox_id>/charging_current_l2/state
+    - source: mqtt
+      topic: wallbox_<your_wallbox_id>/charging_current_l3/state
+
+chargers:
+- name: wallboxpulsarcharger
+  type: custom
+  status:
+    source: combined
+    # not plugged & not charging -> Status A
+    plugged: # -> Status B
+      source: mqtt
+      topic: wallbox_<your_wallbox_id>/cable_connected/state
+    charging: # -> Status C
+      source: mqtt
+      topic: wallbox_<your_wallbox_id>/charging_power/state
+      jq: "if . > 0 then 1 else 0 end"
+  enabled: # charger enabled state (true/false or 0/1)
+    source: mqtt
+    topic: wallbox_<your_wallbox_id>/charging_enable/state
+    timeout: 120m
+  enable: # set charger enabled state (true/false or 0/1)
+    source: mqtt
+    topic: wallbox_<your_wallbox_id>/charging_enable/set
+    payload: ${enable:%d}
+  maxcurrent: # set charger max current (A)
+    source: mqtt
+    topic: wallbox_<your_wallbox_id>/max_charging_current/set
+
+loadpoints:
+- title: wallboxpulsar
+  charger: wallboxpulsarcharger
+  meter: wallboxpulsarmeter
+  mode: pv
+  phases: 3
+  mincurrent: 6
+  maxcurrent: 16
+```
+
+
+<br><br>
+**==Original Readme.md below:==**
+***
 # MQTT Bridge for Wallbox
 
 This open-source project connects your Wallbox fully locally to Home Assistant, providing you with unparalleled speed and reliability.
