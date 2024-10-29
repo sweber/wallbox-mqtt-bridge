@@ -27,26 +27,19 @@ chargers:
 - name: wallboxpulsarcharger
   type: custom
   status:
-    source: combined
-    # not plugged & not charging -> Status A
-    plugged: # -> Status B
-      source: mqtt
-      topic: wallbox_<your_wallbox_id>/cable_connected/state
-    charging: # -> Status C
-      source: mqtt
-      topic: wallbox_<your_wallbox_id>/charging_power/state
-      jq: "if . > 0 then 1 else 0 end"
+    source: mqtt
+    topic: wallbox_147293/control_pilot/state
   enabled: # charger enabled state (true/false or 0/1)
     source: mqtt
-    topic: wallbox_<your_wallbox_id>/charging_enable/state
-    timeout: 120m
+    topic: wallbox_147293/charging_enable/state
   enable: # set charger enabled state (true/false or 0/1)
     source: mqtt
-    topic: wallbox_<your_wallbox_id>/charging_enable/set
+    topic: wallbox_147293/charging_enable/set
     payload: ${enable:%d}
   maxcurrent: # set charger max current (A)
     source: mqtt
-    topic: wallbox_<your_wallbox_id>/max_charging_current/set
+    topic: wallbox_147293/max_charging_current/set
+
 
 loadpoints:
 - title: wallboxpulsar
@@ -87,7 +80,7 @@ Note: Doesn't work with firmware v6.6.x see issue https://github.com/jagheterfre
 3. `ssh` to your Wallbox and run
 
 ```sh
-curl -sSfL https://github.com/sweber/wallbox-mqtt-bridge/releases/tag/v20241028_1/install.sh > install.sh && bash install.sh
+curl -sSfL https://github.com/sweber/wallbox-mqtt-bridge/releases/tag/v20241029_1/install.sh > install.sh && bash install.sh
 ```
 
 Note: To upgrade to new version, simply run the command from step 3 again.

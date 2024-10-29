@@ -49,7 +49,7 @@ func RunTuiSetup() {
 	config.Settings.DebugSensors = false
 	config.Settings.PowerBoostEnabled = false
 	config.Settings.VerboseOutput = false
-	config.Settings.IntervalUpdatedTopics = []string{"charging_enable", "charging_power"}
+	config.Settings.IntervalUpdatedTopics = []string{"charging_enable", "charging_power", "control_pilot"}
 	config.Settings.IntervalUpdatedTopicsSeconds = 15
 
 	askConfirmOrNew(&config.MQTT.Host, "MQTT Host")

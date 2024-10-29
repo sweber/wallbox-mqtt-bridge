@@ -10,9 +10,9 @@ find ~/mqtt-bridge/ -type f ! -name bridge.ini -delete
 echo "Downloading the bridge"
 arch=$(uname -m)
 if [ "$arch" == "armv7l" ]; then
-    curl -sSfL --create-dirs -o ~/mqtt-bridge/bridge https://github.com/sweber/wallbox-mqtt-bridge/releases/download/v20241028_1/bridge-armhf
+    curl -sSfL --create-dirs -o ~/mqtt-bridge/bridge https://github.com/sweber/wallbox-mqtt-bridge/releases/download/v20241029_1/bridge-armhf
 elif [ "$arch" == "aarch64" ]; then
-    curl -sSfL --create-dirs -o ~/mqtt-bridge/bridge https://github.com/sweber/wallbox-mqtt-bridge/releases/download/v20241028_1/bridge-arm64
+    curl -sSfL --create-dirs -o ~/mqtt-bridge/bridge https://github.com/sweber/wallbox-mqtt-bridge/releases/download/v20241029_1/bridge-arm64
 else
     echo "Unknown architecture $arch"
     exit 1

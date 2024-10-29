@@ -79,13 +79,51 @@ var stateMachineStates = map[int]string{
 	0xD2: "Wait Unlock",
 }
 
-var controlPilotStates = map[int]string{
-	0xE:  "Error",
-	0xF:  "Failure",
-	0xA1: "Ready 1", // S1 at 12V, car not connected
-	0xA2: "Ready 2",
-	0xB1: "Connected 1", // S1 at 9V, car connected not allowed charge
-	0xB2: "Connected 2", // S1 at Oscillator, car connected allowed charge
-	0xC1: "Charging 1",
-	0xC2: "Charging 2", // S2 closed
+type ControlPilotState struct {
+	Status  string
+	Detail  string
+	Message string
+}
+
+var ControlPilotStates = map[int]ControlPilotState{
+	0xE: {
+		Status:  "E",
+		Detail:  "E",
+		Message: "Error",
+	},
+	0xF: {
+		Status:  "F",
+		Detail:  "F",
+		Message: "Failure",
+	},
+	0xA1: {
+		Status:  "A",
+		Detail:  "A1",
+		Message: "Ready (S1 at 12V, car not connected)", // S1 at 12V, car not connected
+	},
+	0xA2: {
+		Status:  "A",
+		Detail:  "A2",
+		Message: "Ready",
+	},
+	0xB1: {
+		Status:  "B",
+		Detail:  "B1",
+		Message: "Connected (S1 at 9V, car connected not allowed charge)", // S1 at 9V, car connected not allowed charge
+	},
+	0xB2: {
+		Status:  "B",
+		Detail:  "B2",
+		Message: "Connected (S1 at Oscillator, car connected allowed charge)", // S1 at Oscillator, car connected allowed charge
+	},
+	0xC1: {
+		Status:  "C",
+		Detail:  "C1",
+		Message: "Charging",
+	},
+	0xC2: {
+		Status:  "C",
+		Detail:  "C2",
+		Message: "Charging (S2 closed))", // S2 closed
+	},
 }

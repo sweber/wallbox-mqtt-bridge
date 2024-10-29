@@ -172,6 +172,13 @@ func getEntities(w *wallbox.Wallbox) map[string]Entity {
 				"suggested_display_precision": "1",
 			},
 		},
+		"control_pilot": {
+			Component: "sensor",
+			Getter:    func() string { return wallbox.ControlPilotStates[w.Data.RedisState.ControlPilot].Status },
+			Config: map[string]string{
+				"name": "Control pilot",
+			},
+		},
 		"cumulative_added_energy": {
 			Component: "sensor",
 			Getter:    func() string { return fmt.Sprint(w.Data.SQL.CumulativeAddedEnergy) },
@@ -231,38 +238,38 @@ func getEntities(w *wallbox.Wallbox) map[string]Entity {
 			},
 		},
 		"temp_l1": {
-		    Component: "sensor",
-		    Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL1) },
-		    Config: map[string]string{
-			"name":                 "Temperature Line 1",
-			"unit_of_measurement":  "°C",
-			"device_class":         "temperature",
-			"state_class":          "measurement",
-			"suggested_display_precision": "1",
-		    },
+			Component: "sensor",
+			Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL1) },
+			Config: map[string]string{
+				"name":                        "Temperature Line 1",
+				"unit_of_measurement":         "°C",
+				"device_class":                "temperature",
+				"state_class":                 "measurement",
+				"suggested_display_precision": "1",
+			},
 		},
 		"temp_l2": {
-		    Component: "sensor",
-		    Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL2) },
-		    Config: map[string]string{
-			"name":                 "Temperature Line 2",
-			"unit_of_measurement":  "°C",
-			"device_class":         "temperature",
-			"state_class":          "measurement",
-			"suggested_display_precision": "1",
-		    },
+			Component: "sensor",
+			Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL2) },
+			Config: map[string]string{
+				"name":                        "Temperature Line 2",
+				"unit_of_measurement":         "°C",
+				"device_class":                "temperature",
+				"state_class":                 "measurement",
+				"suggested_display_precision": "1",
+			},
 		},
 		"temp_l3": {
-		    Component: "sensor",
-		    Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL3) },
-		    Config: map[string]string{
-			"name":                 "Temperature Line 3",
-			"unit_of_measurement":  "°C",
-			"device_class":         "temperature",
-			"state_class":          "measurement",
-			"suggested_display_precision": "1",
-		    },
-		},		
+			Component: "sensor",
+			Getter:    func() string { return fmt.Sprint(w.Data.RedisM2W.TempL3) },
+			Config: map[string]string{
+				"name":                        "Temperature Line 3",
+				"unit_of_measurement":         "°C",
+				"device_class":                "temperature",
+				"state_class":                 "measurement",
+				"suggested_display_precision": "1",
+			},
+		},
 	}
 }
 
@@ -368,11 +375,18 @@ func getPowerBoostEntities(w *wallbox.Wallbox, c *WallboxConfig) map[string]Enti
 
 func getDebugEntities(w *wallbox.Wallbox) map[string]Entity {
 	return map[string]Entity{
-		"control_pilot": {
+		"control_pilot_detail": {
 			Component: "sensor",
-			Getter:    w.ControlPilotStatus,
+			Getter:    func() string { return wallbox.ControlPilotStates[w.Data.RedisState.ControlPilot].Detail },
 			Config: map[string]string{
-				"name": "Control pilot",
+				"name": "Control pilot detail",
+			},
+		},
+		"control_pilot_detail_message": {
+			Component: "sensor",
+			Getter:    func() string { return wallbox.ControlPilotStates[w.Data.RedisState.ControlPilot].Message },
+			Config: map[string]string{
+				"name": "Control pilot detail message",
 			},
 		},
 		"m2w_status": {
